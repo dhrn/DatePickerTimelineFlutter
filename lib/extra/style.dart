@@ -19,3 +19,8 @@ const TextStyle defaultDayTextStyle = TextStyle(
   fontSize: Dimen.dayTextSize,
   fontWeight: FontWeight.w500,
 );
+
+const BoxDecoration defaultDecoration = BoxDecoration(
+  borderRadius: BorderRadius.all(Radius.circular(8.0)),
+  color: Colors.grey,
+);

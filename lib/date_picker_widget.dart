@@ -58,6 +58,9 @@ class DatePicker extends StatefulWidget {
   /// Locale for the calendar default: en_us
   final String locale;
 
+  /// box decoration
+  final BoxDecoration decoration;
+
   DatePicker(
     this.startDate, {
     Key key,
@@ -70,6 +73,7 @@ class DatePicker extends StatefulWidget {
     this.selectedTextColor = Colors.white,
     this.selectionColor = AppColors.defaultSelectionColor,
     this.deactivatedColor = AppColors.defaultDeactivatedColor,
+    this.decoration = defaultDecoration,
     this.initialSelectedDate,
     this.activeDates,
     this.inactiveDates,
@@ -186,28 +190,38 @@ class _DatePickerState extends State<DatePicker> {
           bool isSelected =
               _currentDate != null ? _compareDate(date, _currentDate) : false;
 
+          BoxDecoration _decoration = widget.decoration.copyWith(
+              color:
+                  isSelected ? widget.selectionColor : widget.decoration.color);
+
           // Return the Date Widget
           return DateWidget(
             date: date,
             monthTextStyle: isDeactivated
                 ? deactivatedMonthStyle
-                : isSelected ? selectedMonthStyle : widget.monthTextStyle,
+                : isSelected
+                    ? selectedMonthStyle
+                    : widget.monthTextStyle,
             dateTextStyle: isDeactivated
                 ? deactivatedDateStyle
-                : isSelected ? selectedDateStyle : widget.dateTextStyle,
+                : isSelected
+                    ? selectedDateStyle
+                    : widget.dateTextStyle,
             dayTextStyle: isDeactivated
                 ? deactivatedDayStyle
-                : isSelected ? selectedDayStyle : widget.dayTextStyle,
+                : isSelected
+                    ? selectedDayStyle
+                    : widget.dayTextStyle,
             width: widget.width,
             locale: widget.locale,
-            selectionColor:
-                isSelected ? widget.selectionColor : Colors.transparent,
+            selectionColor: isSelected ? widget.selectionColor : Colors.grey,
+            decoration: _decoration,
             onDateSelected: (selectedDate) {
               // Don't notify listener if date is deactivated
               if (isDeactivated) return;
 
               // A date is selected
-              if (widget.onDateChange != null ) {
+              if (widget.onDateChange != null) {
                 widget.onDateChange(selectedDate);
               }
               setState(() {
